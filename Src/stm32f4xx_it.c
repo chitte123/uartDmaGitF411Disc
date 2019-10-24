@@ -42,7 +42,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern UART_HandleTypeDef huart2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -198,6 +198,28 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
+#ifdef USEDMA
+void DMA1_Stream5_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(huart2.hdmarx);
+}
+
+/**
+  * @brief  This function handles DMA TX interrupt request.
+  * @param  None
+  * @retval None  
+  */
+void DMA1_Stream6_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(huart2.hdmatx);
+}
+
+void USART2_IRQHandler(void)
+{
+  HAL_UART_IRQHandler(&huart2);
+}
+
+#endif
 
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
